@@ -1,0 +1,28 @@
+### Python bytecode
+*.pyc
+
+### Build artifacts
+*.egg-info
+build
+dist
+
+### Temporary files
+**/*.DS_Store
+**/*.tmp
+**/*.bak
+**/*~
+
+### Installer logs
+pip-log.txt
+
+### Virtual environment
+venv/
+.env
+
+### Node.js build output
+**/node_modules/
+**/npm-debug.log
+
+### IDE-generated files
+.idea/
+.vscode/
