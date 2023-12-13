@@ -17,7 +17,7 @@ pip-log.txt
 
 ### Virtual environment
 venv/
-.env
+#.env just for the demo
 
 ### Node.js build output
 **/node_modules/
