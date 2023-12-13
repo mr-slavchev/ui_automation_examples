@@ -10,6 +10,6 @@ COPY . /ui-tests
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Set the entrypoint to run pytest
-ENTRYPOINT ["pytest"]
 
+ENTRYPOINT []
+CMD []

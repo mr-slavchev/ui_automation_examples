@@ -1,10 +1,12 @@
-from pages.BasePage import BasePage
+from pages.base_page import BasePage
 
 
 class EmailFiltersPage(BasePage):
-    EMAIL_FILTERS = 'email-filters'
+
     def __init__(self, page):
         super().__init__(page)
+        self.emai_filters_url = 'email-filters'
+        # Locators
         self.email_account_select = page.locator('div[data-e2e="email-filters-users"]')
         self.email_account_item = page.locator('div[data-e2e^="dropdown-option-"]')
         self.filter_name_input = page.locator('input[data-e2e="text-input-filter_name"]')
@@ -20,9 +22,14 @@ class EmailFiltersPage(BasePage):
         self.filter_table_row = page.locator('tr[data-e2e="table-row"]')
         self.dialogue_confirm_button = page.locator('button[data-e2e="dialog-submit"]')
 
+        # Locator maps used for menus
+        self.condition_map = { 'If all': 'div[data-e2e="dropdown-option-match_all_cond"]'}
+        self.filter_attribute_map = {'Any Recipient': 'div[data-e2e="dropdown-option-To_Cc"]'}
+        self.comparison_action_map = {'does not match': 'div[data-e2e="dropdown-option-not_regex_match"]'}
+        self.action_map = {'Pipe to a Program': 'div[data-e2e="dropdown-option-pipe_to_program"]'}
+
     def navigate(self, token):
-        print(f'{self._base_url}/{self.EMAIL_FILTERS}?demoToken={token}')
-        self.page.goto(f'{self._base_url}/{self.EMAIL_FILTERS}?demoToken={token}')
+        self.page.goto(f'{self._base_url}/{self.emai_filters_url}?demoToken={token}')
 
     def create_new_filter(
             self,
@@ -35,11 +42,11 @@ class EmailFiltersPage(BasePage):
             action_value: str
     ):
         self.filter_name_input.type(filter_name)
-        self.select_menu_option(menu_locator=self.condition_dropdown, option_text=condition)
-        self.select_menu_option(menu_locator=self.filter_attribute_dropdown, option_text=filter_attribute)
-        self.select_menu_option(menu_locator=self.comparison_action_dropdown, option_text=comparison_action)
+        self.select_menu_option(menu_locator=self.condition_dropdown, option=self.condition_map[condition])
+        self.select_menu_option(menu_locator=self.filter_attribute_dropdown, option=self.filter_attribute_map[filter_attribute])
+        self.select_menu_option(menu_locator=self.comparison_action_dropdown, option=self.comparison_action_map[comparison_action])
         self.condition_criteria_input.type(condition_criteria)
-        self.select_menu_option(menu_locator=self.action_dropdown, option_text=action)
+        self.select_menu_option(menu_locator=self.action_dropdown, option=self.action_map[action])
         self.action_value_input.type(action_value)
         self.create_button.click()
 
