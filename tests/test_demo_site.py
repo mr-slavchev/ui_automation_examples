@@ -1,19 +1,11 @@
-import json
 import os
 import random
 import pytest
 from playwright.sync_api import Page, expect
-
-
-
 from dotenv import load_dotenv
-
 from pages.dashboard_page import DashboardPage
 from pages.email_filters_page import EmailFiltersPage
 from utils.token import Token
-
-SPANEL_NAME = 'spanel-demo-store-1699447964500-qa-automation-tools.com'
-
 
 
 def generate_random_string(length):
@@ -21,13 +13,6 @@ def generate_random_string(length):
     random_string = ''.join(random.choice(letters) for _ in range(length))
     return random_string
 
-def read_from_json_file(file_path):
-    with open(file_path, 'r') as file:
-        # Load JSON data from file
-        data = json.load(file)
-        return data
-
-# filter_name = 'test filter name'
 
 filter_data = {
     'filter_name': 'test filter name',
@@ -40,6 +25,7 @@ filter_data = {
 }
 
 accounts_list = ['info@qa-automation-tools.com', 'jdoe@qa-automation-tools.com', 'jsmith@qa-automation-tools.com']
+
 
 @pytest.fixture()
 def dot_env():
@@ -77,6 +63,7 @@ def test_create_mail_filter(dot_env, context, page, dashboard_page, email_filter
     email_filters_page.create_new_filter(**filter_data)
 
     expect(email_filters_page.box_notification).to_have_text(success_message.format(filter_data['filter_name']))
+
 
 @pytest.mark.parametrize("language_code", ["en", "es_ES", "de_De", "it_IT",  "fr_FR"])
 def test_delete_mail_filter(browser, token, page: Page, dashboard_page: DashboardPage, email_filters_page: EmailFiltersPage, language_code):
